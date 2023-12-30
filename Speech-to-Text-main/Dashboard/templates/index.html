@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 20px;
+        }
+
+        .dashboard {
+            margin-top: 20px;
+        }
+
+        .form-control {
+            margin-top: 10px;
+        }
+
+        .py-2 {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .mt-4 {
+            margin-top: 40px;
+        }
+
+        .list-group-item {
+            margin-top: 5px;
+        }
+
+        .logo-container {
+            padding: 20px;
+        }
+
+        .logo-container img {
+            border-radius: 50%;
+        }
+
+        table {
+            border: 2px solid black;
+            border-collapse: collapse;
+            width: 100%;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: center;
+        }
+
+        th, td {
+            border: 2px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .list-unstyled {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .list-unstyled li {
+            margin-bottom: 10px;
+        }
+
+        .list-unstyled a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: white;
+        }
+        input[type="text"] {
+            border: 2px solid #ccc;
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color:lightblue; /* Add a background color for the h1 element */
+    color:black; /* Set text color for better visibility */
+    padding:15px 20px;
+    border-radius:10px;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 bg-dark text-light">
+                <div class="logo-container">
+                    <img src="https://www.hdcarwallpapers.com/walls/nissan_gt_r_track_edition_2017_4k-HD.jpg" alt="Company Logo" class="img-fluid">
+                </div>
+                <ul class="list-unstyled">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">All Files</a></li>
+                    <li><a href="#">Saved</a></li>
+                    <li><a href="#">Integration</a></li>
+                    <li><a href="#">Trash</a></li>
+                    <li><a href="#">Setting</a></li>
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <div class="navbar bg-light py-2">
+                    <div class="col-md-8">
+                        <input type="text" placeholder="Search..." class="form-control">
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <img src="https://www.hdcarwallpapers.com/walls/nissan_gt_r_track_edition_2017_4k-HD.jpg" alt="User Profile" class="img-fluid rounded-circle">
+                    </div>
+                </div>
+
+                <div class="dashboard mt-4">
+                    <marquee behavior="scroll" direction="left">
+                        <h1>Welcome, User!</h1>
+                    </marquee>
+                    <input type="file" id="fileInput" accept=".mp3, .mp4" class="form-control mb-4">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Menu Name</th>
+                                <th>Type</th>
+                                <th>Size</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fileHistory">
+                            <!-- History rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add these containers below the table -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="container bg-light mt-4">
+                    <h3 class="py-2">Uploaded Files</h3>
+                    <ul id="uploadedFiles" class="list-group">
+                        <!-- Uploaded files will be dynamically added here -->
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="container bg-light mt-4">
+                    <h3 class="py-2">Transcribed Files</h3>
+                    <ul id="transcribedFiles" class="list-group">
+                        <!-- Transcribed files will be dynamically added here -->
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="container bg-light mt-4">
+                    <h3 class="py-2">Saved Files</h3>
+                    <ul id="savedFiles" class="list-group">
+                        <!-- Saved files will be dynamically added here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // JavaScript code = for file history 
+        const fileInput = document.getElementById('fileInput');
+        const fileHistory = document.getElementById('fileHistory').getElementsByTagName('tbody')[0];
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const newRow = fileHistory.insertRow(0);
+                const nameCell = newRow.insertCell(0);
+                const typeCell = newRow.insertCell(1);
+                const sizeCell = newRow.insertCell(2);
+                const durationCell = newRow.insertCell(3);
+
+                nameCell.textContent = file.name;
+                typeCell.textContent = getFileType(file.type);
+                sizeCell.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+                // You may need to calculate the duration if this is a video or audio file
+                // durationCell.textContent = calculateDuration(file); // Implement this function
+            }
+        });
+
+        // Function to determine the type of file based on the MIME type
+        function getFileType(mimeType) {
+            if (mimeType.startsWith('audio')) {
+                return 'Audio';
+            } else if (mimeType.startsWith('video')) {
+                return 'Video';
+            } else {
+                return 'Unknown';
+            }
+        }
+        // JavaScript code - for calculating count for uploaded file
+
+        // Sample data for uploaded files, transcribed files, and saved files
+        const uploadedFilesData = [];
+        const transcribedFilesData = [];
+        const savedFilesData = [];
+
+        // Function to populate a list
+        function populateList(containerId, data) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = ''; // Clear the container
+
+            data.forEach((item) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = item;
+                listItem.classList.add('list-group-item');
+                container.appendChild(listItem);
+            });
+        }
+
+        // Populate the Uploaded Files container
+        populateList('uploadedFiles', uploadedFilesData);
+
+        // Populate the Transcribed Files container
+        populateList('transcribedFiles', transcribedFilesData);
+
+        // Populate the Saved Files container
+        populateList('savedFiles', savedFilesData);
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                // Simulate an upload process, e.g., adding to "Uploaded Files"
+                uploadedFilesData.push(file.name);
+                populateList('uploadedFiles', uploadedFilesData);
+
+                // You may add logic to transcribe or save the file and update the other containers.
+            }
+        });
+    </script>
+</body>
+
+</html>

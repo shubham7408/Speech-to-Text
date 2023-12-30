@@ -1,0 +1,19 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video/Audio to Text Converter</title>
+</head>
+<body>
+    <h1>Video/Audio to Text Converter</h1>
+    <form method="POST" enctype="multipart/form-data" action="/convert">
+        <input type="file" name="file">
+        <input type="submit" value="Convert">
+    </form>
+    {% if text %}
+    <h2>Transcribed Text:</h2>
+    <p>{{ text }}</p>
+    {% endif %}
+</body>
+</html>
